@@ -5,21 +5,24 @@ import {EventEmitter} from 'events';
 
 const CHANGE_EVENT = 'change';
 
+var tasks = [
+  {"id": 1, "task": "Take out trash", "completed": false},
+  {"id": 2, "task": "Walk the cat", "completed": false},
+  {"id": 3, "task": "Get groceries", "completed": false},
+  {"id": 4, "task": "Get money", "completed": false}
+];
+
 // Where we actually store our data
 var _store = {
-  tasks: [
-    {"id": 1, "task": "Take out trash", "completed": false},
-    {"id": 2, "task": "Walk the cat", "completed": false},
-    {"id": 3, "task": "Get groceries", "completed": false},
-    {"id": 4, "task": "Get money", "completed": false}
-  ],
-  numTasks: 0,
+  tasks: tasks,
+  numTasks: tasks.length,
   showing: ALL
 };
 
 // Private setter methods that manipulate the data in our store.
 var addTask = function(task) {
   _store.tasks.push(task);
+  _store.numTasks++;
 };
 
 var removeItem = function(index) {
@@ -54,7 +57,7 @@ var TodoStore = objectAssign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(payload) {
   const action = payload.action;
   switch (action.type) {
-    case ADD_ITEM:
+    case ADD_TASK:
       addTask(action.task);
       TodoStore.emit(CHANGE_EVENT);
       break;

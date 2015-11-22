@@ -1,4 +1,7 @@
 import React from 'react';
+import uuid from 'node-uuid';
+
+import AppActions from '../actions/AppActions.js';
 
 module.exports = React.createClass({
   getInitialState () {
@@ -51,7 +54,12 @@ module.exports = React.createClass({
     // Use the callback provided by <App />
     var task = this.state.task;
     if (task) {
-      this.props.onAddTask(task);
+      var newTask = {
+        id: uuid.v4(),
+        task: task,
+        completed: false
+      };
+      AppActions.addTask(newTask);
       this.setState({
         task: ''
       });

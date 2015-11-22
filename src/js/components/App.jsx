@@ -42,22 +42,9 @@ module.exports = React.createClass({
           onToggleCompletion={this.handleToggleCompletion}
           onDeleteTask={this.handleDeleteTask}
         />
-        <AddTask onAddTask={this.handleAddTask} />
+        <AddTask />
       </div>
     );
-  },
-
-
-  handleAddTask (task) {
-    var newTask = {
-      id: uuid.v4(),
-      task: task,
-      completed: false
-    };
-    this.setState({
-      tasks: this.state.tasks.concat([newTask]),
-      numTasks: this.state.numTasks + 1
-    });
   },
 
   handleToggleCompletion (id) {
