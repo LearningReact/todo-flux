@@ -1,4 +1,5 @@
 import React from 'react';
+import AppActions from '../actions/AppActions.js';
 
 module.exports = React.createClass({
   getInitialState () {
@@ -17,7 +18,7 @@ module.exports = React.createClass({
         onMouseLeave={this.handleMouseLeave}
         >
           <span
-            onClick={this.handleClick.bind(null, item.id)}
+            onClick={this.handleClick.bind(null, this.props.index)}
             className={'item-text ' + (item.completed ? 'completed' : '')}>
             {item.task}
           </span>
@@ -30,7 +31,7 @@ module.exports = React.createClass({
     if (this.state.hovering) {
       return (
         <span
-          onClick={this.handleDelete.bind(null, this.props.item.id)}
+          onClick={this.handleDelete.bind(null, this.props.index)}
           className='item-delete'>
             X
           </span>
@@ -38,8 +39,8 @@ module.exports = React.createClass({
     }
   },
 
-  handleClick (id) {
-    this.props.onToggleCompletion(id);
+  handleClick (index) {
+    AppActions.toggleCompletion(index);
   },
 
   handleDelete (id) {

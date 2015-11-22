@@ -39,40 +39,11 @@ module.exports = React.createClass({
         />
         <Tasks
           tasks={this.getTasks()}
-          onToggleCompletion={this.handleToggleCompletion}
           onDeleteTask={this.handleDeleteTask}
         />
         <AddTask />
       </div>
     );
-  },
-
-  handleToggleCompletion (id) {
-    var taskIndex = this.findTask(id);
-    var tasks = this.state.tasks.slice(0, taskIndex);
-
-    // Add updated task
-    var taskToUpdate = this.state.tasks[taskIndex];
-    tasks.push({
-      id: taskToUpdate.id,
-      task: taskToUpdate.task,
-      completed: !taskToUpdate.completed
-    });
-
-    // Update the count of tasks remaining, depending on toggle
-    var updatedCount;
-    if (!taskToUpdate.completed === false) {
-      updatedCount = this.state.numTasks + 1;
-    } else {
-      updatedCount = this.state.numTasks - 1;
-    }
-
-    // Concatentate remaining tasks
-    tasks = tasks.concat(this.state.tasks.slice(taskIndex+1));
-    this.setState({
-      tasks: tasks,
-      numTasks: updatedCount
-    })
   },
 
   handleDeleteTask (id) {

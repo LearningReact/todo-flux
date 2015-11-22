@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher/Dispatcher.js';
-import {ALL, ADD_TASK} from '../constants/AppConstants.js';
+import {ALL, ADD_TASK, TOGGLE_COMPLETION} from '../constants/AppConstants.js';
 import objectAssign from 'react/lib/Object.assign';
 import {EventEmitter} from 'events';
 
@@ -23,6 +23,16 @@ var _store = {
 var addTask = function(task) {
   _store.tasks.push(task);
   _store.numTasks++;
+};
+
+var toggleTaskCompletion = function(index) {
+  var task = _store.tasks[index];
+  if (!task.completed) {
+    _store.numTasks--;
+  } else {
+    _store.numTasks++;
+  }
+  task.completed = !task.completed;
 };
 
 var removeItem = function(index) {
@@ -59,6 +69,11 @@ AppDispatcher.register(function(payload) {
   switch (action.type) {
     case ADD_TASK:
       addTask(action.task);
+      TodoStore.emit(CHANGE_EVENT);
+      break;
+
+    case TOGGLE_COMPLETION:
+      toggleTaskCompletion(action.index);
       TodoStore.emit(CHANGE_EVENT);
       break;
     default:
