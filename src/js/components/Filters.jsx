@@ -1,5 +1,5 @@
 import React from 'react';
-import {ALL, ACTIVE, COMPLETED} from '../constants/FilterConstants.js';
+import {ALL, ACTIVE, COMPLETED} from '../constants/AppConstants.js';
 
 module.exports = React.createClass({
   render () {

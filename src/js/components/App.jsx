@@ -2,29 +2,34 @@ import React from 'react';
 import uuid from 'node-uuid';
 import request from 'microajax';
 
+import TodoStore from '../stores/TodoStore.js';
+import {ALL, ACTIVE, COMPLETED} from '../constants/AppConstants.js';
+
 import Tasks from './Tasks.jsx';
 import AddTask from './AddTask.jsx';
 import Filters from './Filters.jsx';
 
-import {ALL, COMPLETED, ACTIVE} from '../constants/FilterConstants.js';
 
 module.exports = React.createClass({
   getInitialState () {
     return {
-      tasks: [],
-      showing: ACTIVE,
-      numTasks: 0
+      tasks: TodoStore.getTasks(),
+      showing: ALL
     };
   },
 
-  // After the component has mounted, perform an AJAX call and update state
-  componentDidMount () {
-    request('data.json', (res) => {
-      var tasks = JSON.parse(res.response);
-      this.setState({
-        tasks: tasks,
-        numTasks: tasks.length
-      });
+  // Additions due to using Flux
+  componentWillMount () {
+    TodoStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnMount () {
+    TodoStore.removeChangeListener(this._onChange);
+  },
+
+  _onChange () {
+    this.setState({
+      tasks: TodoStore.getTasks()
     });
   },
 
@@ -46,6 +51,7 @@ module.exports = React.createClass({
       </div>
     );
   },
+
 
   handleAddTask (task) {
     var newTask = {
