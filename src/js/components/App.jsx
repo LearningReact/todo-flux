@@ -12,10 +12,7 @@ import Filters from './Filters.jsx';
 
 module.exports = React.createClass({
   getInitialState () {
-    return {
-      tasks: TodoStore.getTasks(),
-      showing: ALL
-    };
+    return TodoStore.getState();
   },
 
   // Additions due to using Flux
@@ -28,9 +25,7 @@ module.exports = React.createClass({
   },
 
   _onChange () {
-    this.setState({
-      tasks: TodoStore.getTasks()
-    });
+    this.setState(TodoStore.getState());
   },
 
   render () {

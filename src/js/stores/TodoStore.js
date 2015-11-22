@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher/Dispatcher.js';
-import {ADD_TASK} from '../constants/AppConstants.js';
+import {ALL, ADD_TASK} from '../constants/AppConstants.js';
 import objectAssign from 'react/lib/Object.assign';
 import {EventEmitter} from 'events';
 
@@ -12,7 +12,9 @@ var _store = {
     {"id": 2, "task": "Walk the cat", "completed": false},
     {"id": 3, "task": "Get groceries", "completed": false},
     {"id": 4, "task": "Get money", "completed": false}
-  ]
+  ],
+  numTasks: 0,
+  showing: ALL
 };
 
 // Private setter methods that manipulate the data in our store.
@@ -20,7 +22,7 @@ var addTask = function(task) {
   _store.tasks.push(task);
 };
 
-var remoteItem = function(index) {
+var removeItem = function(index) {
   _store.tasks.splice(index, 1);
 };
 
@@ -39,8 +41,8 @@ var TodoStore = objectAssign({}, EventEmitter.prototype, {
   removeChangeListener (cb) {
     this.removeListener(CHANGE_EVENT, cb);
   },
-  getTasks () {
-    return _store.tasks;
+  getState () {
+    return _store;
   }
 });
 
