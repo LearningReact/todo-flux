@@ -6,7 +6,7 @@ import Tasks from './Tasks.jsx';
 import AddTask from './AddTask.jsx';
 import Filters from './Filters.jsx';
 
-import {ALL, COMPLETED, ACTIVE} from '../constants.js';
+import {ALL, COMPLETED, ACTIVE} from '../constants/FilterConstants.js';
 
 module.exports = React.createClass({
   getInitialState () {
